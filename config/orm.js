@@ -1,6 +1,4 @@
 var connection = require("../config/connection.js");
-
-
 //create the methods that will execute the necessary
 // MySQL commands in the controllers. 
 // These are the methods you will need to use in 
@@ -8,11 +6,35 @@ var connection = require("../config/connection.js");
 // selectAll();
 // insertOne();
 // updateOne();
+function sqlhelper(num){
+	var arr = [];
+
+	for (var i = 0; i < num; i++){
+		arr.push("?");
+	}
+
+	return arr.toString();
+
+}
+
+function sqlObj (ob){
+	var arr = [];
+
+  for (var key in ob) {
+    if (Object.hasOwnProperty.call(ob, key)) {
+      arr.push(key + "=" + ob[key]);
+    }
+  }
+
+  return arr.toString();
+
+}
+
 
 var orm = {
 	
-	selectAll: function(all, table, cb){
-		connection.query("SELECT ?? FROM ??", [all, table], function(err, result){
+	selectAll: function(table, cb){
+		connection.query("SELECT * FROM", + table + ";", function(err, result){
 			if (err){
 				throw err
 			}
@@ -20,8 +42,18 @@ var orm = {
 		});
 	},
 
-	insertOne: function(val, cb){
-		connection.query("INSERT INTO burgers (burger_name) VALUES(??)", [req.body.burger_name], function(err, res){
+	insertOne: function(table, col, val, cb){
+		var query = "INSERT INTO"  + table;
+		query += " (";
+		query += col.toString();
+		query += "VALUES (";
+		query += sqlhelper(val.length);
+		query += ") ";
+
+
+
+		connection.query(query, val,
+			function(err, result){
 			if (err){
 				throw err
 			}
@@ -29,9 +61,14 @@ var orm = {
 		});
 	},
 
-	updateOne: function(name, id, cb){
-		connection.query("UPDATE burgers SET burger_name = ??, WHERE id = ??"[
-			req.body.burger_name, req.body.id], function(err, result){
+	updateOne: function(table, col, id, cb){
+		var query = "UPDATE"  + table;
+		query += " SET ";
+		query += sqlObj(col);
+		query += "WHERE ";
+		query += id;
+
+		connection.query(query, function(err, result){
 				if (err){
 				throw err
 			}

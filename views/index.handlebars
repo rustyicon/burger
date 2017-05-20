@@ -1,6 +1,36 @@
 Setup the index.handlebars to have the template that Handlebars can render onto.
 
 Create a button in index.handlebars that will submit the user input into the database.
+<h1>Uneaten Burgers ( sad :( )) </h1>
+
+<ul>
+  {{#each burgers}}
+    {{#unless devoured}}
+    <li>
+      {{burger_name}}
+      <form action="/{{id}}?_method=PUT" method="POST">
+        <input type="hidden" name="devoured" value="true">
+        <button type="submit">Eat etttt!</button>
+    </form>
+    {{/unless}}
+  {{/each}}
+</ul>
+
+<h2> Devoured Burgers (YUMMM!)</h2>
+
+  <ul> 
+    {{#each burgers}}
+      {{#if devoured}}
+      <li>
+      {{burger_name}}
+        <form action="/{{id}}?_mothod=PUT" method="POST">
+          <input type="hidden" name="devoured" value="false">
+          <button type="submit">NOM</button>
+        </form>
+      </li>
+      {{/if}}
+    {{/each}}
+  </ul>
 
 <h2>Add a Burger</h2>
 <form class="create-update-form" action="/" method="POST">
@@ -12,8 +42,8 @@ Create a button in index.handlebars that will submit the user input into the dat
 
   <div class="form-group">
     <label for="dev">Devour?</label><br>
-    <input type="radio" name="devour" value="1" checked> Devoured!<br>
-    <input type="radio" name="devoured" value="0"> Awake
+    <input type="radio" name="devour" value="1" checked> Heck Yeah!<br>
+    <input type="radio" name="devoured" value="0"> No, thx.
   </div>
 
   <button type="submit">Add Burger</button>

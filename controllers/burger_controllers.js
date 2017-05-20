@@ -6,7 +6,7 @@ var router = express.Router();
 //the end of your file.
 
 router.get("/", function(req, res){
-	burger.selectAll(function(data){
+	burger.all(function(data){
 		var obj = {burgers: data};
 	
 		console.log(obj);
@@ -15,7 +15,7 @@ router.get("/", function(req, res){
 });
 
 router.post("/", function(req, res){
-	burger.insertOne([req.body.burger_name, req.body.devoured],
+	burger.create([req.body.burger_name],
 		function(){
 		res.redirect("/")
 	});
@@ -24,7 +24,7 @@ router.post("/", function(req, res){
 router.put("/:id", function(req, res){
 	var condition = "id = " + req.params.id;
 	console.log(condition);
-	burger.updateOne(function(){
+	burger.update(function(){
 		res.redirect("/");
 	});
 });
