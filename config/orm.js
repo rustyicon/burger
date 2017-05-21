@@ -17,7 +17,7 @@ function sqlhelper(num){
 
 }
 
-function sqlObj (ob){
+function objToSql (ob){
 	var arr = [];
 
   for (var key in ob) {
@@ -33,7 +33,7 @@ function sqlObj (ob){
 
 var orm = {
 	
-	selectAll: function(table, cb){
+	all: function(table, cb){
 		connection.query("SELECT * FROM", + table + ";", function(err, result){
 			if (err){
 				throw err
@@ -42,15 +42,16 @@ var orm = {
 		});
 	},
 
-	insertOne: function(table, col, val, cb){
+	create: function(table, col, value, cb){
 		var query = "INSERT INTO"  + table;
 		query += " (";
 		query += col.toString();
+		query += ") ";
 		query += "VALUES (";
-		query += sqlhelper(val.length);
+		query += sqlhelper(value.length);
 		query += ") ";
 
-
+		//console.log(query);
 
 		connection.query(query, val,
 			function(err, result){
@@ -61,12 +62,14 @@ var orm = {
 		});
 	},
 
-	updateOne: function(table, col, id, cb){
+	update: function(table, col, id, cb){
 		var query = "UPDATE"  + table;
 		query += " SET ";
-		query += sqlObj(col);
+		query += objToSql(col);
 		query += "WHERE ";
 		query += id;
+
+		console.log(query);
 
 		connection.query(query, function(err, result){
 				if (err){
