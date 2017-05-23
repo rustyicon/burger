@@ -9,10 +9,11 @@ var port = 3000;
 var app = express();
 
 //grab css
-app.use(express.static(process.cwd() + "/public"));
+app.use(express.static(__dirname + "/public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(bodyParser.json());
 //method override
 app.use(methodOverride("_method"));
 
@@ -24,6 +25,7 @@ app.set("view engine", "handlebars");
 var routes = require("./controllers/burger_controllers.js");
 
 app.use("/", routes);
+
 
 app.listen(port);
 

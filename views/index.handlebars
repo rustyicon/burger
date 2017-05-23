@@ -1,7 +1,7 @@
 
 <h1>Burger Burger Burger</h1>
 
-<h2>Uneaten Burgers ( sad :( )) </h2>
+<h2>Uneaten Burgers sad :( </h2>
 
 <ul>
   {{#each burgers}}
@@ -23,9 +23,9 @@
       {{#if devoured}}
       <li>
       {{burger_name}}
-        <form action="/{{id}}?_mothod=PUT" method="POST">
+        <form action="/{{id}}?_method=PUT" method="POST">
           <input type="hidden" name="devoured" value="false">
-          <button type="submit">NOM</button>
+          <button type="submit">Eat it again NOM!</button>
         </form>
       </li>
       {{/if}}
@@ -36,15 +36,15 @@
 <form class="create-update-form" action="/" method="POST">
 
   <div class="form-group">
-    <label for="bur">Name That Burger:</label>
-    <input type="text" id="bur" name="burger">
+    <label>Name That Burger:</label>
+    <input type="text" id="add-burger" name="burger">
   </div>
 
   <div class="form-group">
     <label for="dev">Devour?</label><br>
-    <input type="radio" name="devour" value="1" checked> Heck Yeah!<br>
-    <input type="radio" name="devoured" value="0"> No, thx.
+    <input type="radio" id="eat" name="devour" value="1" > Heck Yeah!<br>
+    <input type="radio" id="not-eaten" name="devoured" value="0"> Not right now, thx.
   </div>
 
-  <button type="submit">Add Burger</button>
+  <button type="submit" id="text-enter-button">Add Burger</button>
 </form>
